@@ -55,7 +55,14 @@ app.use(express.json());
 
 // Servir arquivos estáticos (frontend)
 const path = require('path');
-app.use(express.static(path.join(__dirname, '../public')));
+const fs = require('fs');
+const publicPath = path.join(__dirname, '../public');
+console.log('📁 Public path:', publicPath);
+console.log('📁 Public exists:', fs.existsSync(publicPath));
+if (fs.existsSync(publicPath)) {
+  console.log('📁 Files in public:', fs.readdirSync(publicPath));
+}
+app.use(express.static(publicPath));
 
 app.get('/api/health', (_req, res) => res.json({ ok: true, version: '1.0.0' }));
 
@@ -112,7 +119,14 @@ app.post('/api/license/validate', (req, res) => {
 
 // Rota raiz para servir o index.html
 app.get('/', (_req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  const indexPath = path.join(__dirname, '../public/index.html');
+  console.log('🏠 Root route hit, serving:', indexPath);
+  console.log('🏠 File exists:', fs.existsSync(indexPath));
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(404).send('index.html not found at: ' + indexPath);
+  }
 });
 
 const HOST = process.env.HOST || '0.0.0.0';
