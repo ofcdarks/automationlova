@@ -106,7 +106,8 @@ app.post('/api/license/validate', (req, res) => {
   return res.json({ ok: true, payload: parsed.payload, boundHwid: rec.boundHwid });
 });
 
-app.listen(PORT, () => {
-  console.log(`License server on http://localhost:${PORT}`);
+const HOST = process.env.HOST || '0.0.0.0';
+app.listen(PORT, HOST, () => {
+  console.log(`License server on http://${HOST}:${PORT}`);
 });
 
