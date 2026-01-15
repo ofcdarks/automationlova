@@ -463,7 +463,7 @@ return result;
 }
 
 async function createLicense(type) {
-const res = await fetch('http://localhost:4000/api/license/create', {
+const res = await fetch('https://lacasadark-lovable.ecbhub.easypanel.host/api/license/create', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ type })
