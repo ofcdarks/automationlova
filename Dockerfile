@@ -1,6 +1,10 @@
 # Dockerfile na raiz para EasyPanel
 FROM node:18-alpine
 
+# Forçar rebuild ao mudar valor (edit CACHE_BUSTER se precisar)
+ARG CACHE_BUSTER=1
+RUN echo "cache-buster=$CACHE_BUSTER"
+
 WORKDIR /app
 
 # Copiar package files do server
