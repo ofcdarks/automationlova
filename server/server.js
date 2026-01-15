@@ -6,6 +6,7 @@ const Database = require('better-sqlite3');
 const PORT = process.env.PORT || 4000;
 const SECRET = process.env.LICENSE_SECRET || 'mude-este-segredo';
 const DB = new Database('licenses.db');
+console.log('BUILD TAG v3');
 
 DB.prepare(`
 CREATE TABLE IF NOT EXISTS licenses (

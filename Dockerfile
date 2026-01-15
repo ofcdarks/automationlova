@@ -2,7 +2,7 @@
 FROM node:18-alpine
 
 # Forçar rebuild ao mudar valor (edit CACHE_BUSTER se precisar)
-ARG CACHE_BUSTER=1
+ARG CACHE_BUSTER=2
 RUN echo "cache-buster=$CACHE_BUSTER"
 
 WORKDIR /app
