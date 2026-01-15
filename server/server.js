@@ -56,7 +56,7 @@ app.use(express.json());
 // Servir arquivos estáticos (frontend)
 const path = require('path');
 const fs = require('fs');
-const publicPath = path.join(__dirname, '../public');
+const publicPath = path.join(__dirname, 'public');
 console.log('📁 Public path:', publicPath);
 console.log('📁 Public exists:', fs.existsSync(publicPath));
 if (fs.existsSync(publicPath)) {
@@ -119,7 +119,7 @@ app.post('/api/license/validate', (req, res) => {
 
 // Rota raiz para servir o index.html
 app.get('/', (_req, res) => {
-  const indexPath = path.join(__dirname, '../public/index.html');
+  const indexPath = path.join(__dirname, 'public/index.html');
   console.log('🏠 Root route hit, serving:', indexPath);
   console.log('🏠 File exists:', fs.existsSync(indexPath));
   if (fs.existsSync(indexPath)) {
