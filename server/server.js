@@ -110,6 +110,11 @@ app.post('/api/license/validate', (req, res) => {
   return res.json({ ok: true, payload: parsed.payload, boundHwid: rec.boundHwid });
 });
 
+// Rota raiz para servir o index.html
+app.get('/', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
+
 const HOST = process.env.HOST || '0.0.0.0';
 app.listen(PORT, HOST, () => {
   console.log(`License server on http://${HOST}:${PORT}`);
