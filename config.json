@@ -1,0 +1,6 @@
+{
+  "port": 3008,
+  "headless": false,
+  "defaultRepeatCount": 5,
+  "defaultBaseName": "STORE"
+}

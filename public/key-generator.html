@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KeyGen Studio - Gerador Profissional</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+--primary: #6366f1;
+--primary-dark: #4f46e5;
+--primary-light: #818cf8;
+--secondary: #8b5cf6;
+--accent: #ec4899;
+--bg-main: #0a0a0f;
+--bg-card: #151520;
+--bg-card-hover: #1e1e2e;
+--bg-input: #1a1a25;
+--text-primary: #ffffff;
+--text-secondary: #b4b4c7;
+--text-muted: #6b6b7f;
+--border: #2a2a3a;
+--success: #10b981;
+--error: #ef4444;
+--warning: #f59e0b;
+--shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+--shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body {
+font-family: 'Poppins', sans-serif;
+background: linear-gradient(135deg, var(--bg-main) 0%, #0f0f1a 100%);
+min-height: 100vh;
+color: var(--text-primary);
+padding: 20px;
+position: relative;
+overflow-x: hidden;
+}
+body::before {
+content: '';
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: 
+radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+pointer-events: none;
+z-index: 0;
+}
+.main-wrapper {
+max-width: 1200px;
+margin: 0 auto;
+position: relative;
+z-index: 1;
+}
+.header {
+text-align: center;
+margin-bottom: 40px;
+padding: 30px 0;
+}
+.brand {
+display: inline-flex;
+align-items: center;
+gap: 15px;
+margin-bottom: 15px;
+}
+.brand-icon {
+width: 60px;
+height: 60px;
+background: linear-gradient(135deg, var(--primary), var(--secondary));
+border-radius: 16px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 28px;
+box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+}
+.brand-name {
+font-size: 36px;
+font-weight: 800;
+background: linear-gradient(135deg, var(--primary), var(--accent));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+letter-spacing: -1px;
+}
+.tagline {
+color: var(--text-secondary);
+font-size: 16px;
+font-weight: 400;
+}
+.content-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 30px;
+margin-bottom: 30px;
+}
+@media (max-width: 768px) {
+.content-grid {
+grid-template-columns: 1fr;
+}
+}
+.card {
+background: var(--bg-card);
+border: 1px solid var(--border);
+border-radius: 20px;
+padding: 30px;
+box-shadow: var(--shadow);
+transition: all 0.3s ease;
+}
+.card:hover {
+transform: translateY(-5px);
+box-shadow: var(--shadow-lg);
+border-color: var(--primary);
+}
+.card-title {
+font-size: 18px;
+font-weight: 600;
+color: var(--text-primary);
+margin-bottom: 20px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.key-output-card {
+grid-column: 1 / -1;
+}
+.key-display-wrapper {
+position: relative;
+}
+.key-display {
+background: var(--bg-input);
+border: 2px dashed var(--border);
+border-radius: 16px;
+padding: 25px;
+min-height: 100px;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.3s ease;
+}
+.key-display.has-key {
+border-color: var(--primary);
+border-style: solid;
+background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.05));
+}
+.key-text {
+font-family: 'Courier New', monospace;
+font-size: 20px;
+font-weight: 700;
+color: var(--primary-light);
+letter-spacing: 3px;
+word-break: break-all;
+text-align: center;
+}
+.key-placeholder {
+color: var(--text-muted);
+font-size: 15px;
+font-weight: 400;
+}
+.action-buttons {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 15px;
+margin-top: 20px;
+}
+.btn {
+padding: 14px 24px;
+border: none;
+border-radius: 12px;
+font-size: 15px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+font-family: 'Poppins', sans-serif;
+}
+.btn-primary {
+background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+color: white;
+box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+.btn-primary:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+}
+.btn-secondary {
+background: var(--bg-input);
+border: 1px solid var(--border);
+color: var(--text-primary);
+}
+.btn-secondary:hover {
+background: var(--bg-card-hover);
+border-color: var(--primary);
+}
+.btn:active {
+transform: translateY(0);
+}
+.controls-section {
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+.control-group {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+.control-label {
+font-size: 14px;
+font-weight: 500;
+color: var(--text-secondary);
+}
+.control-input {
+padding: 12px 16px;
+background: var(--bg-input);
+border: 1px solid var(--border);
+border-radius: 10px;
+color: var(--text-primary);
+font-size: 15px;
+font-family: 'Poppins', sans-serif;
+transition: all 0.3s ease;
+}
+.control-input:focus {
+outline: none;
+border-color: var(--primary);
+box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+.control-input[type="number"] {
+text-align: center;
+}
+.keys-history {
+margin-top: 30px;
+}
+.history-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 20px;
+}
+.history-list {
+max-height: 400px;
+overflow-y: auto;
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+.history-item {
+background: var(--bg-input);
+border: 1px solid var(--border);
+border-radius: 12px;
+padding: 16px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+transition: all 0.2s ease;
+}
+.history-item:hover {
+background: var(--bg-card-hover);
+border-color: var(--primary);
+}
+.history-key {
+font-family: 'Courier New', monospace;
+font-size: 14px;
+color: var(--primary-light);
+flex: 1;
+word-break: break-all;
+margin-right: 15px;
+font-weight: 600;
+}
+.history-copy {
+background: var(--bg-card);
+border: 1px solid var(--border);
+border-radius: 8px;
+padding: 8px 16px;
+color: var(--text-secondary);
+cursor: pointer;
+font-size: 13px;
+font-weight: 500;
+transition: all 0.2s ease;
+white-space: nowrap;
+}
+.history-copy:hover {
+background: var(--primary);
+color: white;
+border-color: var(--primary);
+}
+.notification {
+position: fixed;
+top: 20px;
+right: 20px;
+background: var(--bg-card);
+border: 1px solid var(--border);
+border-radius: 12px;
+padding: 16px 20px;
+box-shadow: var(--shadow-lg);
+display: none;
+align-items: center;
+gap: 12px;
+z-index: 1000;
+max-width: 400px;
+animation: slideIn 0.3s ease;
+}
+.notification.show {
+display: flex;
+}
+.notification.success {
+border-color: var(--success);
+}
+.notification.error {
+border-color: var(--error);
+}
+.notification-icon {
+font-size: 20px;
+}
+.notification-text {
+font-size: 14px;
+color: var(--text-primary);
+font-weight: 500;
+}
+@keyframes slideIn {
+from {
+transform: translateX(400px);
+opacity: 0;
+}
+to {
+transform: translateX(0);
+opacity: 1;
+}
+}
+.footer-links {
+text-align: center;
+margin-top: 40px;
+padding-top: 30px;
+border-top: 1px solid var(--border);
+}
+.footer-link {
+color: var(--primary-light);
+text-decoration: none;
+font-size: 14px;
+font-weight: 500;
+transition: all 0.2s ease;
+}
+.footer-link:hover {
+color: var(--primary);
+}
+.stats-badge {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: rgba(99, 102, 241, 0.1);
+border: 1px solid rgba(99, 102, 241, 0.3);
+border-radius: 8px;
+padding: 6px 12px;
+font-size: 13px;
+color: var(--primary-light);
+}
+</style>
+</head>
+<body>
+<div class="main-wrapper">
+<header class="header">
+<div class="brand">
+<div class="brand-icon">⚡</div>
+<div class="brand-name">KeyGen Studio</div>
+</div>
+<p class="tagline">Gerador profissional de chaves de autenticação</p>
+</header>
+
+<div class="content-grid">
+<div class="card key-output-card">
+<div class="card-title">
+<span>🔐</span>
+<span>Chave Gerada</span>
+</div>
+<div class="key-display-wrapper">
+<div class="key-display" id="keyDisplay">
+<span class="key-placeholder">Aguardando geração de chave...</span>
+</div>
+</div>
+<div class="action-buttons">
+<button class="btn btn-primary" id="generateBtn" onclick="generateKey()">
+<span>✨</span>
+<span>Gerar Nova Chave</span>
+</button>
+<button class="btn btn-secondary" id="copyBtn" onclick="copyKey()" style="display: none;">
+<span>📋</span>
+<span>Copiar Chave</span>
+</button>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">
+<span>⚙️</span>
+<span>Configurações</span>
+</div>
+<div class="controls-section">
+<div class="control-group">
+<label class="control-label">Tipo de licença</label>
+<select class="control-input" id="licenseType">
+  <option value="daily">Diária (1 dia)</option>
+  <option value="monthly">Mensal (30 dias)</option>
+  <option value="lifetime">Vitalícia</option>
+</select>
+</div>
+<div class="control-group">
+<label class="control-label">Quantidade para lote</label>
+<input type="number" class="control-input" id="quantityInput" value="5" min="1" max="100">
+</div>
+<button class="btn btn-primary" id="generateMultipleBtn" onclick="generateMultipleKeys()">
+<span>🎯</span>
+<span>Gerar Lote de Chaves</span>
+</button>
+</div>
+</div>
+</div>
+
+<div class="card keys-history">
+<div class="history-header">
+<div class="card-title">
+<span>📜</span>
+<span>Histórico de Chaves</span>
+</div>
+<span class="stats-badge" id="statsBadge">0 chaves geradas</span>
+</div>
+<div class="history-list" id="generatedKeysList">
+<div style="text-align: center; color: var(--text-muted); padding: 40px;">
+Nenhuma chave gerada ainda
+</div>
+</div>
+</div>
+
+<div class="footer-links">
+<a href="index.html" class="footer-link">← Retornar ao Dashboard</a>
+</div>
+</div>
+
+<div class="notification" id="notification">
+<span class="notification-icon" id="notificationIcon"></span>
+<span class="notification-text" id="notificationText"></span>
+</div>
+
+<script>
+let generatedCount = 0;
+
+function generateRandomString(length) {
+const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+let result = '';
+for (let i = 0; i < length; i++) {
+result += chars.charAt(Math.floor(Math.random() * chars.length));
+}
+return result;
+}
+
+async function createLicense(type) {
+const res = await fetch('http://localhost:4000/api/license/create', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ type })
+});
+const data = await res.json();
+if (!data.ok) throw new Error(data.reason || 'Erro ao gerar');
+return data.license;
+}
+
+async function generateKey() {
+const type = document.getElementById('licenseType').value;
+try {
+  const key = await createLicense(type);
+  const keyDisplay = document.getElementById('keyDisplay');
+  const copyBtn = document.getElementById('copyBtn');
+  const generatedKeysList = document.getElementById('generatedKeysList');
+
+  keyDisplay.innerHTML = '<span class="key-text">' + key + '</span>';
+  keyDisplay.classList.add('has-key');
+  copyBtn.style.display = 'flex';
+  copyBtn.setAttribute('data-key', key);
+
+  addKeyToList(key, type);
+  showNotification('Chave gerada com sucesso!', 'success');
+} catch (e) {
+  showNotification(e.message, 'error');
+}
+}
+
+function copyKey() {
+const copyBtn = document.getElementById('copyBtn');
+const key = copyBtn.getAttribute('data-key');
+const keyDisplay = document.getElementById('keyDisplay');
+const keyText = keyDisplay.querySelector('.key-text');
+
+const keyToCopy = key || (keyText ? keyText.textContent : '');
+
+if (keyToCopy) {
+navigator.clipboard.writeText(keyToCopy).then(() => {
+showNotification('Chave copiada para a área de transferência!', 'success');
+copyBtn.innerHTML = '<span>✓</span><span>Copiado!</span>';
+setTimeout(() => {
+copyBtn.innerHTML = '<span>📋</span><span>Copiar Chave</span>';
+}, 2000);
+});
+}
+}
+
+async function generateMultipleKeys() {
+const quantity = parseInt(document.getElementById('quantityInput').value) || 1;
+const type = document.getElementById('licenseType').value;
+const generatedKeysList = document.getElementById('generatedKeysList');
+
+if (quantity < 1 || quantity > 100) {
+  showNotification('Por favor, insira um número entre 1 e 100.', 'error');
+  return;
+}
+
+if (generatedKeysList.querySelector('.history-item') || generatedKeysList.textContent.includes('Nenhuma')) {
+  generatedKeysList.innerHTML = '';
+}
+
+try {
+  for (let i = 0; i < quantity; i++) {
+    const key = await createLicense(type);
+    addKeyToList(key, type);
+  }
+  showNotification(`${quantity} chave(s) gerada(s) com sucesso!`, 'success');
+} catch (e) {
+  showNotification(e.message, 'error');
+}
+}
+
+function addKeyToList(key, type = '') {
+const generatedKeysList = document.getElementById('generatedKeysList');
+const statsBadge = document.getElementById('statsBadge');
+
+if (generatedKeysList.textContent.includes('Nenhuma')) {
+generatedKeysList.innerHTML = '';
+}
+
+const keyItem = document.createElement('div');
+keyItem.className = 'history-item';
+keyItem.innerHTML = `
+<div style="display:flex;flex-direction:column;gap:4px;flex:1;">
+  <span class="history-key">${key}</span>
+  <span style="font-size:12px;color:var(--text-muted);text-transform:uppercase;">${type}</span>
+</div>
+<button class="history-copy" onclick="copySpecificKey('${key}', this)">📋 Copiar</button>
+`;
+generatedKeysList.insertBefore(keyItem, generatedKeysList.firstChild);
+
+generatedCount++;
+statsBadge.textContent = `${generatedCount} chave(s) gerada(s)`;
+}
+
+function copySpecificKey(key, button) {
+navigator.clipboard.writeText(key).then(() => {
+showNotification('Chave copiada!', 'success');
+const originalText = button.innerHTML;
+button.innerHTML = '✓ Copiado';
+button.style.background = 'var(--success)';
+button.style.borderColor = 'var(--success)';
+button.style.color = 'white';
+setTimeout(() => {
+button.innerHTML = originalText;
+button.style.background = '';
+button.style.borderColor = '';
+button.style.color = '';
+}, 2000);
+});
+}
+
+function showNotification(text, type) {
+const notification = document.getElementById('notification');
+const notificationIcon = document.getElementById('notificationIcon');
+const notificationText = document.getElementById('notificationText');
+
+const icons = {
+success: '✅',
+error: '❌',
+warning: '⚠️'
+};
+
+notification.className = 'notification show ' + type;
+notificationIcon.textContent = icons[type] || '💬';
+notificationText.textContent = text;
+
+setTimeout(() => {
+notification.classList.remove('show');
+}, 3000);
+}
+
+window.addEventListener('load', () => {
+generateKey();
+});
+</script>
+</body>
+</html>

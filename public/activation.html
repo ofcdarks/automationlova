@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ativação - Painel de Recargas 1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg-primary: #0f0f0f;
+--bg-secondary: #1a1a1a;
+--bg-tertiary: #252525;
+--bg-hover: #2a2a2a;
+--text-primary: #ffffff;
+--text-secondary: #a0a0a0;
+--text-muted: #666666;
+--accent-primary: #22c55e;
+--accent-hover: #16a34a;
+--success: #22c55e;
+--warning: #f59e0b;
+--error: #ef4444;
+--info: #3b82f6;
+--border-color: #333333;
+--border-radius: 12px;
+--border-radius-sm: 8px;
+--transition: all 0.2s ease;
+}
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body {
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+background: var(--bg-primary);
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--text-primary);
+padding: 20px;
+}
+.activation-container {
+background: var(--bg-secondary);
+border: 1px solid var(--border-color);
+border-radius: var(--border-radius);
+padding: 48px;
+max-width: 480px;
+width: 100%;
+text-align: center;
+box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+.logo {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 12px;
+margin-bottom: 32px;
+}
+.logo-icon {
+width: 48px;
+height: 48px;
+background: linear-gradient(135deg, var(--accent-primary), #059669);
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 24px;
+}
+.logo-text {
+font-size: 24px;
+font-weight: 700;
+color: var(--text-primary);
+}
+.logo-text span {
+color: var(--accent-primary);
+}
+h1 {
+font-size: 28px;
+font-weight: 600;
+margin-bottom: 12px;
+color: var(--text-primary);
+}
+.subtitle {
+color: var(--text-secondary);
+font-size: 15px;
+margin-bottom: 32px;
+line-height: 1.5;
+}
+.form-group {
+margin-bottom: 24px;
+text-align: left;
+}
+.form-label {
+display: block;
+font-size: 13px;
+font-weight: 500;
+color: var(--text-secondary);
+margin-bottom: 8px;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+.license-input {
+width: 100%;
+padding: 14px 16px;
+background: var(--bg-tertiary);
+border: 2px solid var(--border-color);
+border-radius: var(--border-radius-sm);
+color: var(--text-primary);
+font-size: 13px;
+font-family: 'Courier New', monospace;
+text-align: center;
+letter-spacing: 1px;
+text-transform: uppercase;
+transition: var(--transition);
+}
+.license-input:focus {
+outline: none;
+border-color: var(--accent-primary);
+box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
+}
+.license-input::placeholder {
+color: var(--text-muted);
+letter-spacing: 1px;
+font-size: 12px;
+}
+.machine-id-box {
+background: var(--bg-tertiary);
+border: 1px solid var(--border-color);
+border-radius: var(--border-radius-sm);
+padding: 16px;
+margin-bottom: 24px;
+}
+.machine-id-label {
+font-size: 11px;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 1px;
+margin-bottom: 8px;
+}
+.machine-id-value {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 12px;
+}
+.machine-id-text {
+font-family: 'Courier New', monospace;
+font-size: 16px;
+color: var(--info);
+letter-spacing: 2px;
+}
+.copy-btn {
+background: var(--bg-hover);
+border: 1px solid var(--border-color);
+border-radius: 6px;
+padding: 8px 12px;
+color: var(--text-secondary);
+cursor: pointer;
+transition: var(--transition);
+font-size: 12px;
+}
+.copy-btn:hover {
+background: var(--border-color);
+color: var(--text-primary);
+}
+.copy-btn.copied {
+background: var(--accent-primary);
+color: white;
+border-color: var(--accent-primary);
+}
+.activate-btn {
+width: 100%;
+padding: 16px 32px;
+background: linear-gradient(135deg, var(--accent-primary), #059669);
+border: none;
+border-radius: var(--border-radius-sm);
+color: white;
+font-size: 16px;
+font-weight: 600;
+cursor: pointer;
+transition: var(--transition);
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+}
+.activate-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
+}
+.activate-btn:active {
+transform: translateY(0);
+}
+.activate-btn:disabled {
+opacity: 0.6;
+cursor: not-allowed;
+transform: none;
+box-shadow: none;
+}
+.activate-btn .spinner {
+width: 20px;
+height: 20px;
+border: 2px solid transparent;
+border-top-color: white;
+border-radius: 50%;
+animation: spin 0.8s linear infinite;
+display: none;
+}
+.activate-btn.loading .spinner {
+display: block;
+}
+.activate-btn.loading .btn-text {
+display: none;
+}
+@keyframes spin {
+to {
+transform: rotate(360deg);
+}
+}
+.message {
+margin-top: 20px;
+padding: 14px 18px;
+border-radius: var(--border-radius-sm);
+font-size: 14px;
+display: none;
+align-items: center;
+gap: 10px;
+}
+.message.show {
+display: flex;
+}
+.message.error {
+background: rgba(239, 68, 68, 0.1);
+border: 1px solid rgba(239, 68, 68, 0.3);
+color: var(--error);
+}
+.message.success {
+background: rgba(34, 197, 94, 0.1);
+border: 1px solid rgba(34, 197, 94, 0.3);
+color: var(--success);
+}
+.message.warning {
+background: rgba(245, 158, 11, 0.1);
+border: 1px solid rgba(245, 158, 11, 0.3);
+color: var(--warning);
+}
+.message-icon {
+font-size: 18px;
+}
+.footer-text {
+margin-top: 32px;
+font-size: 12px;
+color: var(--text-muted);
+}
+.footer-text a {
+color: var(--accent-primary);
+text-decoration: none;
+}
+.footer-text a:hover {
+text-decoration: underline;
+}
+/* Animação de entrada */
+.activation-container {
+animation: fadeInUp 0.5s ease-out;
+}
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+/* Responsivo */
+@media (max-width: 500px) {
+.activation-container {
+padding: 32px 24px;
+}
+h1 {
+font-size: 24px;
+}
+.license-input {
+font-size: 14px;
+letter-spacing: 2px;
+}
+.machine-id-text {
+font-size: 12px;
+}
+}
+</style>
+<script>
+// Autenticação removida - redirecionando para página principal
+window.location.href = '/';
+</script>
+</head>
+<body>
+<div class="activation-container">
+<div class="logo">
+<div class="logo-icon">⚡</div>
+<div class="logo-text">Painel de <span>Recargas</span></div>
+</div>
+<h1>🔐 Ativação do Produto</h1>
+<p class="subtitle">
+Insira sua chave de licença para ativar o painel.<br>
+A licença será vinculada a este computador.
+</p>
+<div class="machine-id-box">
+<div class="machine-id-label">ID da sua máquina</div>
+<div class="machine-id-value">
+<span class="machine-id-text" id="machineId">Carregando...</span>
+<button class="copy-btn" id="copyBtn" onclick="copyMachineId()">
+📋 Copiar
+</button>
+</div>
+</div>
+<form id="activationForm">
+<div class="form-group">
+<label class="form-label">Chave de Licença</label>
+<input type="text" class="license-input" id="licenseKey"
+placeholder="KEYAUTH-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" maxlength="50" autocomplete="off"
+spellcheck="false" required>
+</div>
+<button type="submit" class="activate-btn" id="activateBtn">
+<span class="spinner"></span>
+<span class="btn-text">🚀 Ativar Licença</span>
+</button>
+</form>
+<div class="message" id="message">
+<span class="message-icon"></span>
+<span class="message-text"></span>
+</div>
+<p class="footer-text">
+Problemas com a ativação? Entre em contato com o suporte.<br>
+<a href="#">suporte@exemplo.com</a>
+</p>
+</div>
+<script>
+const API_BASE = 'http://localhost:4000/api';
+
+function showMessage(text, type = 'info') {
+  const message = document.getElementById('message');
+  const iconEl = message.querySelector('.message-icon');
+  const textEl = message.querySelector('.message-text');
+  const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+  message.className = 'message show ' + type;
+  iconEl.textContent = icons[type] || 'ℹ️';
+  textEl.textContent = text;
+}
+
+function hideMessage() {
+  document.getElementById('message').classList.remove('show');
+}
+
+function copyMachineId() {
+  const machineId = document.getElementById('machineId').textContent;
+  navigator.clipboard.writeText(machineId).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.classList.add('copied');
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = '📋 Copiar';
+    }, 1500);
+  });
+}
+
+async function loadMachineId() {
+  const hwid = window.lovable?.getHWID?.() || 'unavailable';
+  document.getElementById('machineId').textContent = hwid;
+}
+
+async function activateLicense(licenseKey) {
+  const hwid = document.getElementById('machineId').textContent;
+  if (!hwid || hwid === 'unavailable') throw new Error('HWID indisponível (precisa rodar no executável).');
+  const res = await fetch(`${API_BASE}/license/activate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ license: licenseKey.trim(), hwid })
+  });
+  const data = await res.json();
+  if (!data.ok) throw new Error(data.reason || 'Erro ao ativar');
+  // guarda local
+  localStorage.setItem('licenseKey', licenseKey.trim());
+  return data;
+}
+
+document.getElementById('activationForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideMessage();
+  const input = document.getElementById('licenseKey');
+  const btn = document.getElementById('activateBtn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+  try {
+    const res = await activateLicense(input.value);
+    showMessage('Licença ativada com sucesso!', 'success');
+    setTimeout(() => { window.location.href = '/'; }, 1200);
+  } catch (err) {
+    showMessage(err.message, 'error');
+  } finally {
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+});
+
+window.addEventListener('DOMContentLoaded', loadMachineId);
+</script>
+</body>
+</html>
