@@ -53,6 +53,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Servir arquivos estáticos (frontend)
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../public')));
+
 app.get('/api/health', (_req, res) => res.json({ ok: true, version: '1.0.0' }));
 
 app.post('/api/license/create', (req, res) => {

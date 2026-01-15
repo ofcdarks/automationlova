@@ -12,6 +12,9 @@ RUN npm install --production
 # Copiar código do servidor
 COPY server/ ./
 
+# Copiar frontend (public)
+COPY public/ ../public/
+
 # Expor porta
 EXPOSE 4000
 
